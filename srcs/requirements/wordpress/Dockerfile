@@ -1,12 +1,39 @@
 FROM alpine:3.19
 
+WORKDIR /var/www/html
+
 # Install packages
 RUN apk update && apk add --no-cache \
-	php81-fpm
+	php81 \
+	php81-phar \
+	php81-curl \
+	php81-fpm \
+	php81-mysqli \
+	php81-mbstring \
+	php81-json \
+	php81-session \
+	php81-gd \
+	php81-iconv \
+	php81-xml \
+	php81-simplexml \
+	php81-zip \
+	php81-tokenizer
 
-# Install wordpress
-RUN mdkir -p /var/www/html \
-	&& cd /var/www/html \
-	&& wget 
+# Create a symlink for `php`
+RUN ln -s /usr/bin/php81 /usr/bin/php
 
-CMD ["php-fpm", "-F"]
+RUN apk add --no-cache --upgrade bash
+
+# Install wp-cli
+RUN wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar \
+	&& chmod +x wp-cli.phar \
+	&& mv wp-cli.phar /usr/local/bin/wp
+
+# Entry point script to automate WordPress setup
+RUN mkdir -p /usr/local/bin
+COPY ./setup.sh /usr/local/bin/setup.sh
+RUN chmod +x /usr/local/bin/setup.sh
+
+# CMD ["php-fpm", "-F"]
+# CMD ["setup.sh"]
+CMD ["/usr/local/bin/setup.sh"]
