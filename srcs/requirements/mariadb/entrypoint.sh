@@ -1,9 +1,9 @@
-#!/bin/bash
+#!/bin/sh
 
 # Exit immediately if any command returns a non-zero exit
 set -e
 
-echo "Starting to create mariadb..."
+echo "Starting mariadb..."
 
 # Function to initialize the database
 initialize_db() {

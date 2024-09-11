@@ -3,8 +3,7 @@ FROM alpine:3.19
 # Install packages
 RUN apk update && apk add --no-cache \
 	mariadb \
-	mariadb-client \
-	bash
+	mariadb-client
 
 # Create the required directory for MariaDB runtime files
 RUN mkdir -p /run/mysqld && chown -R mysql:mysql /run/mysqld
@@ -24,7 +23,3 @@ USER mysql
 
 # Use the custom entrypoint script
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
-
-
-# CMD ["mysqld"]
-# CMD ["/docker-entrypoint-initdb.d/init-db.sh"]

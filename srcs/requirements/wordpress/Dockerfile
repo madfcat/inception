@@ -22,8 +22,6 @@ RUN apk update && apk add --no-cache \
 # Create a symlink for `php`
 RUN ln -s /usr/bin/php81 /usr/bin/php
 
-RUN apk add --no-cache --upgrade bash
-
 # Install wp-cli
 RUN wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar \
 	&& chmod +x wp-cli.phar \
@@ -35,5 +33,3 @@ COPY ./setup.sh /usr/local/bin/setup.sh
 RUN chmod +x /usr/local/bin/setup.sh
 
 ENTRYPOINT ["/usr/local/bin/setup.sh"]
-
-# CMD ["php-fpm", "-F"]
