@@ -20,6 +20,8 @@ RUN chmod +x /usr/local/bin/entrypoint.sh
 # RUN rm -rf /etc/my.cnf.d/*
 COPY ./conf/mymariadb-server.cnf /etc/my.cnf.d/
 
+USER mysql
+
 # Use the custom entrypoint script
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
 

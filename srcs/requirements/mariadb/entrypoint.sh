@@ -8,21 +8,21 @@ echo "Starting to create mariadb..."
 # Function to initialize the database
 initialize_db() {
 	echo "Initializing MariaDB database..."
-	mysql_install_db --user=mysql --datadir=/var/lib/mysql
+	mariadb-install-db --user=mysql --datadir=/var/lib/mysql
 
 	# Start MariaDB in the background temporarily
-	mysqld_safe --datadir=/var/lib/mysql &
+	mariadbd --user=mysql --datadir=/var/lib/mysql &
 	MARIADB_PID=$!
 
 	# Wait for MariaDB to start
-	until mysqladmin ping --silent; do
+	until mariadb-admin ping --silent; do
 		sleep 1
 	done
 
 	echo "MariaDB started successfully."
 
 	# Run initialization script
-	mysql --user=root <<-EOSQL
+	mysql --user=mysql <<-EOSQL
 		CREATE DATABASE IF NOT EXISTS wordpress;
 		CREATE USER IF NOT EXISTS 'wpuser'@'%' IDENTIFIED BY 'wppassword';
 		GRANT ALL PRIVILEGES ON wordpress.* TO 'wpuser'@'%';
@@ -32,7 +32,7 @@ initialize_db() {
 	echo "Database and user created successfully."
 
 	# Shut down MariaDB
-	mysqladmin shutdown
+	mariadb-admin shutdown
 	wait $MARIADB_PID
 }
 
@@ -42,4 +42,4 @@ if [ ! -d /var/lib/mysql/mysql ]; then
 fi
 
 # Start MariaDB as PID 1
-exec mysqld_safe
+exec mariadbd --user=mysql
