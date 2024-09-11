@@ -39,6 +39,19 @@ services:
     #   - "9000:80"  # Expose container port 80 to host port 9000
     restart: always
 
+  # nginx:
+  #   build: ./srcs/requirements/nginx
+  #   expose:
+  #     - 443
+  #   ports:
+  #     - "443:443"
+  #   depends_on:
+  #     - mariadb
+  #     - wordpress
+  #   networks:
+  #     - inception_network
+  #   restart: always
+
 # volumes:
 #   wp_data:
 #   db_data:

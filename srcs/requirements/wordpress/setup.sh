@@ -6,7 +6,7 @@ set -e
 echo "Starting to create wordpress..."
 
 # Forward signals to the main process
-exec "$@"
+# exec "$@"
 
 # Download WordPress if not already present
 wp core download --path=/var/www/html
@@ -51,4 +51,4 @@ else
 fi
 
 # Start PHP-FPM in the foreground to keep the container running
-php-fpm81 -F
+exec php-fpm81 -F

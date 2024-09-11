@@ -34,6 +34,6 @@ RUN mkdir -p /usr/local/bin
 COPY ./setup.sh /usr/local/bin/setup.sh
 RUN chmod +x /usr/local/bin/setup.sh
 
+ENTRYPOINT ["/usr/local/bin/setup.sh"]
+
 # CMD ["php-fpm", "-F"]
-# CMD ["setup.sh"]
-CMD ["/usr/local/bin/setup.sh"]
