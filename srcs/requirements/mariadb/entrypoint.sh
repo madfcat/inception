@@ -18,14 +18,21 @@ initialize_db() {
 	until mariadb-admin ping --silent; do
 		sleep 1
 	done
-
 	echo "MariaDB started successfully."
 
-	# Run initialization script
+	# Change root password
+	echo "Setting root password..."
 	mysql --user=mysql <<-EOSQL
-		CREATE DATABASE IF NOT EXISTS wordpress;
-		CREATE USER IF NOT EXISTS 'wpuser'@'%' IDENTIFIED BY 'wppassword';
-		GRANT ALL PRIVILEGES ON wordpress.* TO 'wpuser'@'%';
+		ALTER USER 'root'@'localhost' IDENTIFIED BY '${MYSQL_ROOT_PASSWORD}';
+		GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY '${MYSQL_ROOT_PASSWORD}' WITH GRANT OPTION;
+		FLUSH PRIVILEGES;
+	EOSQL
+
+	# Initialize wordpress db
+	mysql --user=mysql <<-EOSQL
+		CREATE DATABASE IF NOT EXISTS ${MYSQL_DATABASE};
+		CREATE USER IF NOT EXISTS '${MYSQL_USER}'@'%' IDENTIFIED BY '${MYSQL_PASSWORD}';
+		GRANT ALL PRIVILEGES ON ${MYSQL_DATABASE}.* TO '${MYSQL_USER}'@'%';
 		FLUSH PRIVILEGES;
 	EOSQL
 

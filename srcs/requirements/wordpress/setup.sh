@@ -12,10 +12,11 @@ if [ ! -f /var/www/html/wp-config.php ]; then
 
 	# Create wp-config.php file with the required database info
 	echo "Creating wp-config.php file..."
-	wp config create --dbname="${WORDPRESS_DB_NAME}" \
-		--dbuser="${WORDPRESS_DB_USER}" \
-		--dbpass="${WORDPRESS_DB_PASSWORD}" \
-		--dbhost="${WORDPRESS_DB_HOST}" \
+	wp config create --dbname="${WP_DB_NAME}" \
+		--dbuser="${WP_DB_USER}" \
+		--dbpass="${WP_DB_PASSWORD}" \
+		--dbhost="${WP_DB_HOST}" \
+		--dbprefix="${WP_TABLE_PREFIX}" \
 		--path=/var/www/html \
 		--allow-root
 
@@ -31,12 +32,17 @@ if ! wp core is-installed --path=/var/www/html --allow-root; then
 
 	# Install WordPress
 	wp core install --url="http://localhost" \
-		--title="My WordPress Site" \
-		--admin_user="admin" \
-		--admin_password="password" \
-		--admin_email="admin@example.com" \
+		--title="${WP_SITE_NAME}" \
+		--admin_user="${WP_ADMIN_USERNAME}" \
+		--admin_password="${WP_ADMIN_PASSWORD}" \
+		--admin_email="${WP_ADMIN_EMAIL}" \
 		--path=/var/www/html \
 		--allow-root
+
+	# Create a simple user
+	wp user create $WP_SIMPLE_USERNAME $WP_SIMPLE_EMAIL \
+		--role="${WP_SIMPLE_ROLE}" \
+		--user_pass="${WP_SIMPLE_PASSWORD}"
 
 	# Install and activate a theme (replace 'twentytwentyone' with your theme)
 	wp theme install twentytwentyone --activate --path=/var/www/html --allow-root
