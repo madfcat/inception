@@ -53,4 +53,4 @@ else
 fi
 
 # Start PHP-FPM in the foreground to keep the container running
-exec php-fpm81 -F
+exec php-fpm81 -F -R

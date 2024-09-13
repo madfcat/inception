@@ -1,4 +1,24 @@
+version: '3.9'
+
 services:
+  nginx:
+    build: ./srcs/requirements/nginx
+    image: nginx
+    container_name: nginx
+    expose:
+      - 80
+      - 443
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - wordpress
+    networks:
+      - inception_network
+    volumes:
+      - ./volumes/wp_data:/usr/share/nginx/html
+    restart: always
+
   mariadb:
     build: ./srcs/requirements/mariadb
     image: mariadb
@@ -46,19 +66,6 @@ services:
     # ports:
     #   - "9000:80"  # Expose container port 80 to host port 9000
     restart: always
-  # nginx:
-  #   build: ./srcs/requirements/nginx
-  #   expose:
-  #     - 443
-  #   ports:
-  #     - "443:443"
-  #   depends_on:
-  #     - mariadb
-  #     - wordpress
-  #   networks:
-  #     - inception_network
-  #   restart: always
-
   # volumes:
   #   wp_data:
   #   db_data:

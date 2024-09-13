@@ -32,4 +32,7 @@ RUN mkdir -p /usr/local/bin
 COPY ./setup.sh /usr/local/bin/setup.sh
 RUN chmod +x /usr/local/bin/setup.sh
 
+# Copy override config for PHP-FPM
+COPY ./conf/wxyz.conf /etc/php81/php-fpm.d/
+
 ENTRYPOINT ["/usr/local/bin/setup.sh"]

@@ -6,7 +6,7 @@
 #    By: vshchuki <vshchuki@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/04 16:27:29 by vshchuki          #+#    #+#              #
-#    Updated: 2024/09/11 12:32:12 by vshchuki         ###   ########.fr        #
+#    Updated: 2024/09/13 00:40:22 by vshchuki         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ fclean: clean
 	rm -rf ./volumes/db_data/*
 	rm -rf ./volumes/wp_data/*
 	docker network rm inception_network
-	docker image rm -f wordpress mariadb
+	docker image rm -f wordpress mariadb nginx
 
 re: fclean all
 
