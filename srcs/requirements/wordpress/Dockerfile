@@ -17,7 +17,8 @@ RUN apk update && apk add --no-cache \
 	php81-xml \
 	php81-simplexml \
 	php81-zip \
-	php81-tokenizer
+	php81-tokenizer \
+	php81-dom
 
 # Create a symlink for `php`
 RUN ln -s /usr/bin/php81 /usr/bin/php

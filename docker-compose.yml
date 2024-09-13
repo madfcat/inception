@@ -5,6 +5,8 @@ services:
     build: ./srcs/requirements/nginx
     image: nginx
     container_name: nginx
+    environment:
+      - CERTS_=${CERTS_}
     expose:
       - 80
       - 443
@@ -55,6 +57,7 @@ services:
       - WP_SIMPLE_EMAIL=${WP_SIMPLE_EMAIL}
       - WP_SIMPLE_ROLE=${WP_SIMPLE_ROLE}
       - WP_SIMPLE_PASSWORD=${WP_SIMPLE_PASSWORD}
+      - WP_DUMMY_XML=${WP_DUMMY_XML}
     depends_on:
       - mariadb
     networks:
