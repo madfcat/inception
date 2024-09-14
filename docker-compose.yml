@@ -37,8 +37,7 @@ services:
       - WP_SIMPLE_PASSWORD=${WP_SIMPLE_PASSWORD}
       - WP_DUMMY_XML=${WP_DUMMY_XML}
     depends_on:
-      mariadb:
-        condition: service_healthy
+      - mariadb
     networks:
       - inception_network
     volumes:
