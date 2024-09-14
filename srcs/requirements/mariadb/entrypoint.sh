@@ -45,7 +45,8 @@ initialize_db() {
 }
 
 # Check if the database needs initialization
-if [ ! -d /var/lib/mysql/mysql ]; then
+# if [ ! -d /var/lib/mysql/mysql ]; then
+if [ ! -d /var/lib/mysql/wordpress ]; then
 	initialize_db
 fi
 

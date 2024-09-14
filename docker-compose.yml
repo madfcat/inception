@@ -15,6 +15,11 @@ services:
       # - /Users/vshchuki/data/db_data:/var/lib/mysql
       # - /Users/mcp/Documents/data/db_data:/var/lib/mysql
       # - ./volumes/db_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
     expose:
       - 3306
     restart: always
@@ -62,7 +67,8 @@ services:
       - WP_SIMPLE_PASSWORD=${WP_SIMPLE_PASSWORD}
       - WP_DUMMY_XML=${WP_DUMMY_XML}
     depends_on:
-      - mariadb
+      mariadb:
+        condition: service_healthy
     networks:
       - inception_network
     volumes:
@@ -90,7 +96,6 @@ volumes:
   wp_data:
     name: wp_data
     driver: local
-    # external: true
     driver_opts:
       type: none
       o: bind
@@ -104,7 +109,6 @@ volumes:
   db_data:
     name: db_data
     driver: local
-    # external: true
     driver_opts:
       type: none
       o: bind
