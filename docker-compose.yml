@@ -12,39 +12,9 @@ services:
       - inception_network
     volumes:
       - db_data:/var/lib/mysql
-      # - /Users/vshchuki/data/db_data:/var/lib/mysql
-      # - /Users/mcp/Documents/data/db_data:/var/lib/mysql
-      # - ./volumes/db_data:/var/lib/mysql
-    healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
     expose:
       - 3306
     restart: always
-
-  nginx:
-    build: ./srcs/requirements/nginx
-    image: nginx
-    container_name: nginx
-    environment:
-      - CERTS_=${CERTS_}
-    expose:
-      - 443
-    ports:
-      - "443:443"
-    depends_on:
-      - wordpress
-    networks:
-      - inception_network
-    volumes:
-      - wp_data:/usr/share/nginx/html
-      # - /Users/vshchuki/data/wp_data:/usr/share/nginx/html
-      # - /Users/mcp/Documents/data/wp_data:/usr/share/nginx/html
-      # - ./volumes/wp_data:/usr/share/nginx/html
-    restart: always
-
 
   wordpress:
     build: ./srcs/requirements/wordpress
@@ -73,24 +43,32 @@ services:
       - inception_network
     volumes:
       - wp_data:/var/www/html
-      # - /Users/vshchuki/data/wp_data:/var/www/html
-      # - /Users/mcp/Documents/data/wp_data:/var/www/html
-      # - ./volumes/wp_data:/var/www/html
     expose:
       - 9000
+    restart: always
+
+  nginx:
+    build: ./srcs/requirements/nginx
+    image: nginx
+    container_name: nginx
+    environment:
+      - CERTS_=${CERTS_}
+    expose:
+      - 443
+    ports:
+      - "443:443"
+    depends_on:
+      - wordpress
+    networks:
+      - inception_network
+    volumes:
+      - wp_data:/usr/share/nginx/html
     restart: always
 
 networks:
   inception_network:
     name: inception_network
     driver: bridge
-
-# volumes:
-#   wp_data:
-#     name: wp_data
-
-#   db_data:
-#     name: db_data
 
 volumes:
   wp_data:
@@ -99,12 +77,7 @@ volumes:
     driver_opts:
       type: none
       o: bind
-      # device: ~/Documents/data/wp_data  # Specify host directory for WordPress data
-      # device: ./volumes/wp_data1  # Specify host directory for WordPress data
-      # device: /Users/mcp/Documents/tutorials-training/hive/projects/inception/volumes/wp_data1  # Specify host directory for WordPress data
-      # device: /Users/mcp/Documents/tutorials-training/hive/projects/volumes/wp_data1  # Specify host directory for WordPress data
-      # device: /Users/mcp/Documents/data/wp_data
-      device: /Users/vshchuki/data/wp_data  # 
+      device: /Users/vshchuki/data/wp_data
 
   db_data:
     name: db_data
@@ -112,9 +85,4 @@ volumes:
     driver_opts:
       type: none
       o: bind
-      # device: ~/Documents/data/db_data1  # Specify host directory for MariaDB data
-      # device: ./volumes/db_data1  # Specify host directory for MariaDB data
-      # device: /Users/mcp/Documents/tutorials-training/hive/projects/inception/volumes/db_data1  # Specify host directory for MariaDB data
-      # device: /Users/mcp/Documents/tutorials-training/hive/projects/volumes/db_data1  # Specify host directory for MariaDB data
-      # device: /Users/mcp/Documents/data/db_data
-      device:  /Users/vshchuki/data/db_data  # 
+      device:  /Users/vshchuki/data/db_data

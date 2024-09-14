@@ -51,5 +51,4 @@ if [ ! -d /var/lib/mysql/wordpress ]; then
 fi
 
 # Start MariaDB as PID 1
-# exec mariadbd --user=mysql --character-set-server=utf8mb4 --collation-server=utf8mb4_bin 
 exec mariadbd --user=mysql
