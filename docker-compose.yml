@@ -23,9 +23,9 @@ services:
     environment:
       - HTTP_HOST=${DOMAIN_NAME}
       - WP_DB_HOST=${WP_DB_HOST}
-      - WP_DB_NAME=${WP_DB_NAME}
-      - WP_DB_USER=${WP_DB_USER}
-      - WP_DB_PASSWORD=${WP_DB_PASSWORD}
+      - WP_DB_NAME=${MYSQL_DATABASE}
+      - WP_DB_USER=${MYSQL_USER}
+      - WP_DB_PASSWORD=${MYSQL_PASSWORD}
       - WP_TABLE_PREFIX=${WP_TABLE_PREFIX}
       - WP_SITE_NAME=${WP_SITE_NAME}
       - WP_ADMIN_USERNAME=${WP_ADMIN_USERNAME}
@@ -77,6 +77,24 @@ services:
       - inception_network
     volumes:
       - wp_data:/var/lib/ftp
+    restart: always
+
+  adminer:
+    build: ./srcs/requirements/adminer
+    image: adminer
+    container_name: adminer
+    environment:
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+    expose:
+      - 90001
+    # depends_on:
+    #   - wordpress
+    # dns:
+    #   - 8.8.8.8
+    networks:
+      - inception_network
     restart: always
 
 networks:

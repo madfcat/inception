@@ -6,7 +6,7 @@
 #    By: vshchuki <vshchuki@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/04 16:27:29 by vshchuki          #+#    #+#              #
-#    Updated: 2024/09/15 00:54:14 by vshchuki         ###   ########.fr        #
+#    Updated: 2024/09/15 15:20:01 by vshchuki         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,8 +15,10 @@
 
 LOGIN=vshchuki
 DOMAIN_NAME=$(LOGIN).hive.fi
+ADMINER_DOMAIN_NAME=adminer.$(DOMAIN_NAME)
 FILE=/etc/hosts
 ENTRY=127.0.0.1   $(DOMAIN_NAME)
+ADMINER_ENTRY=127.0.0.1   $(ADMINER_DOMAIN_NAME)
 
 # For Linux:
 # USERS_DIR=/home 
@@ -44,6 +46,13 @@ all:
 		echo "Entry added: $(ENTRY)"; \
 	else \
 		echo "Domain already exists in $(FILE)."; \
+	fi
+	@if ! grep -q $(ADMINER_DOMAIN_NAME) $(FILE); then \
+		echo "Subdomain not found. Adding entry..."; \
+		echo "$(ADMINER_ENTRY)" | sudo tee -a $(FILE) > /dev/null; \
+		echo "Entry added: $(ADMINER_ENTRY)"; \
+	else \
+		echo "Subomain already exists in $(FILE)."; \
 	fi
 
 	docker compose --env-file ./srcs/.env build --no-cache

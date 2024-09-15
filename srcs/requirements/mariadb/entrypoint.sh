@@ -33,7 +33,6 @@ initialize_db() {
 		CREATE DATABASE IF NOT EXISTS ${MYSQL_DATABASE};
 		CREATE USER IF NOT EXISTS '${MYSQL_USER}'@'%' IDENTIFIED BY '${MYSQL_PASSWORD}';
 		GRANT ALL PRIVILEGES ON ${MYSQL_DATABASE}.* TO '${MYSQL_USER}'@'%';
-		GRANT ALL PRIVILEGES ON ${MYSQL_DATABASE}.* TO '${MYSQL_USER}'@'wordpress.inception_network' IDENTIFIED BY '${MYSQL_PASSWORD}';
 		FLUSH PRIVILEGES;
 	EOSQL
 
@@ -45,7 +44,6 @@ initialize_db() {
 }
 
 # Check if the database needs initialization
-# if [ ! -d /var/lib/mysql/mysql ]; then
 if [ ! -d /var/lib/mysql/wordpress ]; then
 	initialize_db
 fi
