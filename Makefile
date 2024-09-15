@@ -6,7 +6,7 @@
 #    By: vshchuki <vshchuki@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/04 16:27:29 by vshchuki          #+#    #+#              #
-#    Updated: 2024/09/14 18:37:31 by vshchuki         ###   ########.fr        #
+#    Updated: 2024/09/15 00:54:14 by vshchuki         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -55,7 +55,7 @@ stop:
 fclean: stop
 	sudo rm -rf $(WP_VOLUME_PATH)
 	sudo rm -rf $(MYSQL_VOLUME_PATH)
-	docker image rm wordpress mariadb nginx 2>/dev/null || true
+	docker image rm wordpress mariadb nginx pure-ftpd 2>/dev/null || true
 	docker volume rm wp_data db_data 2>/dev/null || true
 	docker network rm inception_network 2>/dev/null || true
 

@@ -64,6 +64,21 @@ services:
       - wp_data:/usr/share/nginx/html
     restart: always
 
+  pure-ftpd:
+    build: ./srcs/requirements/pure-ftpd
+    image: pure-ftpd
+    container_name: pure-ftpd
+    ports:
+      - "21:21"
+      - "30000-30009:30000-30009"
+    depends_on:
+      - wordpress
+    networks:
+      - inception_network
+    volumes:
+      - wp_data:/var/lib/ftp
+    restart: always
+
 networks:
   inception_network:
     name: inception_network

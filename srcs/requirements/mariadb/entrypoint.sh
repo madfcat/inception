@@ -3,7 +3,7 @@
 # Exit immediately if any command returns a non-zero exit
 set -e
 
-echo "Starting mariadb..."
+echo "Starting MariaDB..."
 
 # Function to initialize the database
 initialize_db() {

@@ -3,7 +3,7 @@
 # Exit immediately if any command returns a non-zero exit
 set -e
 
-echo "Starting wordpress..."
+echo "Starting Wordpress..."
 
 # If wp-config.php doesn't exist, create it
 if [ ! -f /var/www/html/wp-config.php ]; then
