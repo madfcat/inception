@@ -6,7 +6,7 @@
 #    By: vshchuki <vshchuki@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/04 16:27:29 by vshchuki          #+#    #+#              #
-#    Updated: 2024/09/15 17:59:16 by vshchuki         ###   ########.fr        #
+#    Updated: 2024/09/17 18:04:31 by vshchuki         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ ENTRY=127.0.0.1   $(DOMAIN_NAME)
 ADMINER_ENTRY=127.0.0.1   $(ADMINER_DOMAIN_NAME)
 
 # For Linux:
-# USERS_DIR=/home 
+# HOME_DIR=/home
 # For MacOS:
 HOME_DIR=/Users
 USER_DIR=$(HOME_DIR)/$(LOGIN)

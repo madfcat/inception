@@ -19,7 +19,6 @@ WORKDIR /var/www/html
 
 # Copy override config for PHP-FPM
 COPY ./conf/wxyz.conf /etc/php81/php-fpm.d/
-COPY ./prefill.php /var/www/html/
 
 CMD ["php-fpm81", "-F"]
 # CMD ["php-fpm81", "-F", "-R"]
