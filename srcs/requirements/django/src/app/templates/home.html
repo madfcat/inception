@@ -1,0 +1,26 @@
+{% extends 'main.html' %}
+
+{% load static %}
+
+{% block content %}
+<article>
+	<h1>Home</h1>
+	<p>
+		Here is a small gallery which fulfills the requirement to showcase something.
+		Check out these weird animals.
+	</p>
+	<div class="gallery">
+		<div class="column">
+			<div class="image"><img src="{% static 'images/ales-krivec-1Ofu8QGRFrg-unsplash.jpg' %}"></div>
+			<div class="image"><img src="{% static 'images/bernd-dittrich-LkMGb5to8Xo-unsplash.jpg' %}"></div>
+			<div class="image"><img src="{% static 'images/doug-morris-1REfxJGpfF4-unsplash.jpg' %}"></div>
+		</div>
+		<div class="column">
+			<div class="image"><img src="{% static 'images/joanna-huang-hHTD2I72fM8-unsplash.jpg' %}"></div>
+			<div class="image"><img src="{% static 'images/melissa-askew--OOGt3Yede0-unsplash.jpg' %}"></div>
+			<div class="image"><img src="{% static 'images/stephen-tafra-lSsVizdGe6w-unsplash.jpg' %}"></div>
+		</div>
+	</div>
+</article>
+
+{% endblock %}

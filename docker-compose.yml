@@ -1,98 +1,110 @@
 services:
-  mariadb:
-    build: ./srcs/requirements/mariadb
-    image: mariadb
-    container_name: mariadb
-    environment:
-      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
-      - MYSQL_DATABASE=${MYSQL_DATABASE}
-      - MYSQL_USER=${MYSQL_USER}
-      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
-    networks:
-      - inception_network
-    volumes:
-      - db_data:/var/lib/mysql
-    expose:
-      - 3306
-    restart: always
+  # mariadb:
+  #   build: ./srcs/requirements/mariadb
+  #   image: mariadb
+  #   container_name: mariadb
+  #   environment:
+  #     - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+  #     - MYSQL_DATABASE=${MYSQL_DATABASE}
+  #     - MYSQL_USER=${MYSQL_USER}
+  #     - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+  #   networks:
+  #     - inception_network
+  #   volumes:
+  #     - db_data:/var/lib/mysql
+  #   expose:
+  #     - 3306
+  #   restart: always
 
-  wordpress:
-    build: ./srcs/requirements/wordpress
-    image: wordpress
-    container_name: wordpress
-    environment:
-      - HTTP_HOST=${DOMAIN_NAME}
-      - WP_DB_HOST=${WP_DB_HOST}
-      - WP_DB_NAME=${MYSQL_DATABASE}
-      - WP_DB_USER=${MYSQL_USER}
-      - WP_DB_PASSWORD=${MYSQL_PASSWORD}
-      - WP_TABLE_PREFIX=${WP_TABLE_PREFIX}
-      - WP_SITE_NAME=${WP_SITE_NAME}
-      - WP_ADMIN_USERNAME=${WP_ADMIN_USERNAME}
-      - WP_ADMIN_EMAIL=${WP_ADMIN_EMAIL}
-      - WP_ADMIN_PASSWORD=${WP_ADMIN_PASSWORD}
-      - WP_SIMPLE_USERNAME=${WP_SIMPLE_USERNAME}
-      - WP_SIMPLE_EMAIL=${WP_SIMPLE_EMAIL}
-      - WP_SIMPLE_ROLE=${WP_SIMPLE_ROLE}
-      - WP_SIMPLE_PASSWORD=${WP_SIMPLE_PASSWORD}
-      - WP_DUMMY_XML=${WP_DUMMY_XML}
-    depends_on:
-      - mariadb
-    networks:
-      - inception_network
-    volumes:
-      - wp_data:/var/www/html
-    expose:
-      - 9000
-    restart: always
+  # wordpress:
+  #   build: ./srcs/requirements/wordpress
+  #   image: wordpress
+  #   container_name: wordpress
+  #   environment:
+  #     - HTTP_HOST=${DOMAIN_NAME}
+  #     - WP_DB_HOST=${WP_DB_HOST}
+  #     - WP_DB_NAME=${MYSQL_DATABASE}
+  #     - WP_DB_USER=${MYSQL_USER}
+  #     - WP_DB_PASSWORD=${MYSQL_PASSWORD}
+  #     - WP_TABLE_PREFIX=${WP_TABLE_PREFIX}
+  #     - WP_SITE_NAME=${WP_SITE_NAME}
+  #     - WP_ADMIN_USERNAME=${WP_ADMIN_USERNAME}
+  #     - WP_ADMIN_EMAIL=${WP_ADMIN_EMAIL}
+  #     - WP_ADMIN_PASSWORD=${WP_ADMIN_PASSWORD}
+  #     - WP_SIMPLE_USERNAME=${WP_SIMPLE_USERNAME}
+  #     - WP_SIMPLE_EMAIL=${WP_SIMPLE_EMAIL}
+  #     - WP_SIMPLE_ROLE=${WP_SIMPLE_ROLE}
+  #     - WP_SIMPLE_PASSWORD=${WP_SIMPLE_PASSWORD}
+  #     - WP_DUMMY_XML=${WP_DUMMY_XML}
+  #   depends_on:
+  #     - mariadb
+  #   networks:
+  #     - inception_network
+  #   volumes:
+  #     - wp_data:/var/www/html
+  #   expose:
+  #     - 9000
+  #   restart: always
 
-  nginx:
-    build: ./srcs/requirements/nginx
-    image: nginx
-    container_name: nginx
-    environment:
-      - CERTS_=${CERTS_}
+  # nginx:
+  #   build: ./srcs/requirements/nginx
+  #   image: nginx
+  #   container_name: nginx
+  #   environment:
+  #     - CERTS_=${CERTS_}
+  #   expose:
+  #     - 443
+  #   ports:
+  #     - "443:443"
+  #   depends_on:
+  #     - wordpress
+  #   networks:
+  #     - inception_network
+  #   volumes:
+  #     - wp_data:/usr/share/nginx/html
+  #   restart: always
+
+  # pure-ftpd:
+  #   build: ./srcs/requirements/pure-ftpd
+  #   image: pure-ftpd
+  #   container_name: pure-ftpd
+  #   ports:
+  #     - "21:21"
+  #     - "30000-30009:30000-30009"
+  #   depends_on:
+  #     - wordpress
+  #   networks:
+  #     - inception_network
+  #   volumes:
+  #     - wp_data:/var/lib/ftp
+  #   restart: always
+
+  # adminer:
+  #   build: ./srcs/requirements/adminer
+  #   image: adminer
+  #   container_name: adminer
+  #   environment:
+  #     - MYSQL_DATABASE=${MYSQL_DATABASE}
+  #     - MYSQL_USER=${MYSQL_USER}
+  #     - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+  #   expose:
+  #     - 90001
+  #   networks:
+  #     - inception_network
+  #   restart: always
+
+  django:
+    build: ./srcs/requirements/django
+    image: django
+    container_name: django
+    # environment:
+    #   - MYSQL_DATABASE=${MYSQL_DATABASE}
+    #   - MYSQL_USER=${MYSQL_USER}
+    #   - MYSQL_PASSWORD=${MYSQL_PASSWORD}
     expose:
-      - 443
+      - 8000
     ports:
-      - "443:443"
-    depends_on:
-      - wordpress
-    networks:
-      - inception_network
-    volumes:
-      - wp_data:/usr/share/nginx/html
-    restart: always
-
-  pure-ftpd:
-    build: ./srcs/requirements/pure-ftpd
-    image: pure-ftpd
-    container_name: pure-ftpd
-    ports:
-      - "21:21"
-      - "30000-30009:30000-30009"
-    depends_on:
-      - wordpress
-    networks:
-      - inception_network
-    volumes:
-      - wp_data:/var/lib/ftp
-    restart: always
-
-  adminer:
-    build: ./srcs/requirements/adminer
-    image: adminer
-    container_name: adminer
-    environment:
-      - MYSQL_DATABASE=${MYSQL_DATABASE}
-      - MYSQL_USER=${MYSQL_USER}
-      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
-    expose:
-      - 90001
-    # depends_on:
-    #   - wordpress
-    # dns:
-    #   - 8.8.8.8
+      - "8000:8000"
     networks:
       - inception_network
     restart: always
