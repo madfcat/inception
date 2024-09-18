@@ -9,13 +9,28 @@ FROM alpine:3.19
 # Set working directory
 WORKDIR /usr/src/app
 
-COPY ./src/app .
+COPY ./src/ /usr/src/
 
 # Install packages
 RUN apk update && apk add --no-cache \
 	python3 \
 	py3-pip
 
-RUN pip install -r requirements.txt
+# Install virtualenv
+RUN python -m venv /opt/venv
 
-CMD ["python", "manage.py", "runserver"]
+# Activate virtualenv and install dependencies
+RUN . /opt/venv/bin/activate && pip install --upgrade pip && pip install -r /usr/src/requirements.txt
+
+# Activate virtualenv in shell 
+ENV PATH="/opt/venv/bin:$PATH"
+
+RUN mkdir -p /usr/src/app/staticfiles
+RUN chmod -R 755 /usr/src/app/staticfiles
+
+RUN python manage.py collectstatic --noinput
+
+# CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+CMD ["gunicorn", "--workers=3", "--bind=0.0.0.0:8000", "app.wsgi:application"]
+
+# CMD ["python", "manage.py", "runserver", "127.0.0.1:8000"]

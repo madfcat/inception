@@ -58,6 +58,7 @@ services:
       - "443:443"
     depends_on:
       - wordpress
+      - django
     networks:
       - inception_network
     volumes:
@@ -93,21 +94,21 @@ services:
       - inception_network
     restart: always
 
-  # django:
-  #   build: ./srcs/requirements/django
-  #   image: django
-  #   container_name: django
-  #   # environment:
-  #   #   - MYSQL_DATABASE=${MYSQL_DATABASE}
-  #   #   - MYSQL_USER=${MYSQL_USER}
-  #   #   - MYSQL_PASSWORD=${MYSQL_PASSWORD}
-  #   expose:
-  #     - 8000
-  #   ports:
-  #     - "8000:8000"
-  #   networks:
-  #     - inception_network
-  #   restart: always
+  django:
+    build: ./srcs/requirements/django
+    image: django
+    container_name: django
+    # environment:
+    #   - MYSQL_DATABASE=${MYSQL_DATABASE}
+    #   - MYSQL_USER=${MYSQL_USER}
+    #   - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+    expose:
+      - 8000
+    # ports:
+    #   - "8000:8000"
+    networks:
+      - inception_network
+    restart: always
 
 networks:
   inception_network:

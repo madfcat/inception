@@ -16,7 +16,7 @@ body {
 	background-color: cornsilk;
 	max-width: 800px;
 	padding: 15px;
-	height: auto;
+	height: 100%;
 }
 
 body .content > :last-child {
