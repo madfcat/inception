@@ -33,10 +33,13 @@ initialize_db() {
 		CREATE DATABASE IF NOT EXISTS ${MYSQL_DATABASE};
 		CREATE USER IF NOT EXISTS '${MYSQL_USER}'@'%' IDENTIFIED BY '${MYSQL_PASSWORD}';
 		GRANT ALL PRIVILEGES ON ${MYSQL_DATABASE}.* TO '${MYSQL_USER}'@'%';
+
+		CREATE DATABASE kuma;
+		GRANT ALL PRIVILEGES ON kuma.* TO 'wpuser'@'%';
 		FLUSH PRIVILEGES;
 	EOSQL
+	echo "Database for kuma created successfully."
 
-	echo "Database and user created successfully."
 
 	# Shut down MariaDB
 	mariadb-admin shutdown

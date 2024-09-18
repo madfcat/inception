@@ -6,7 +6,7 @@
 #    By: vshchuki <vshchuki@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/04 16:27:29 by vshchuki          #+#    #+#              #
-#    Updated: 2024/09/17 21:39:38 by vshchuki         ###   ########.fr        #
+#    Updated: 2024/09/19 01:13:03 by vshchuki         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -79,8 +79,10 @@ fclean:
 		wordpress \
 		mariadb \
 		nginx \
+		redis \
 		pure-ftpd \
 		adminer \
+		kuma \
 		2>/dev/null || true
 	docker volume rm wp_data db_data 2>/dev/null || true
 	docker network rm inception_network 2>/dev/null || true

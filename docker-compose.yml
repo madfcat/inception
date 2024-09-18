@@ -38,10 +38,11 @@ services:
       - WP_DUMMY_XML=${WP_DUMMY_XML}
     depends_on:
       - mariadb
+      - redis
     networks:
       - inception_network
     volumes:
-      - wp_data:/var/www/html
+      - wp_data:/var/www/html:rw
     expose:
       - 9000
     restart: always
@@ -65,6 +66,18 @@ services:
       - wp_data:/usr/share/nginx/html
     restart: always
 
+  redis:
+    build: ./srcs/requirements/redis
+    image: redis
+    container_name: redis
+    # depends_on:
+    #   - wordpress
+    networks:
+      - inception_network
+    expose:
+      - 6379
+    restart: always
+  
   pure-ftpd:
     build: ./srcs/requirements/pure-ftpd
     image: pure-ftpd
@@ -98,14 +111,18 @@ services:
     build: ./srcs/requirements/django
     image: django
     container_name: django
-    # environment:
-    #   - MYSQL_DATABASE=${MYSQL_DATABASE}
-    #   - MYSQL_USER=${MYSQL_USER}
-    #   - MYSQL_PASSWORD=${MYSQL_PASSWORD}
     expose:
       - 8000
-    # ports:
-    #   - "8000:8000"
+    networks:
+      - inception_network
+    restart: always
+
+  kuma:
+    build: ./srcs/requirements/kuma
+    image: kuma
+    container_name: kuma
+    ports:
+      - "3001:3001"
     networks:
       - inception_network
     restart: always

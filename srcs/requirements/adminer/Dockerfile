@@ -9,9 +9,12 @@ php81-json \
 php81-mbstring \
 curl
 
+# Update CA certificates
+RUN apk update && apk add --no-cache ca-certificates
+
 # # Create the Adminer directory and download Adminer
 RUN mkdir -p /var/www/html
-RUN curl -L -o /var/www/html/index.php https://www.adminer.org/latest.php
+RUN curl -k -L -o /var/www/html/index.php https://www.adminer.org/latest.php
 # RUN wget --max-redirect=10 -O /var/www/html/index.php https://www.adminer.org/latest.php
 
 # Set the working directory

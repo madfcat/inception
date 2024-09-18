@@ -65,6 +65,26 @@ if ! wp core is-installed --path=/var/www/html --allow-root; then
 		echo "Dummy content file does not exist at $URL"
 	fi
 
+	# Install redis plugin and add config
+	wp plugin install redis-cache --activate
+	if ! grep -q "WP_REDIS_HOST" /var/www/html/wp-config.php; then
+		# printf "\n// Redis configuration\n" >> /var/www/html/wp-config.php
+		# printf "define('WP_REDIS_HOST', 'redis');\n" >> /var/www/html/wp-config.php
+		# printf "define('WP_REDIS_PORT', 6379);\n" >> /var/www/html/wp-config.php
+		sed -i "/\/\* That's all, stop editing! Happy publishing. \*\//a \
+\
+/* Redis configuration */\n\
+define('WP_REDIS_HOST', 'redis');\n\
+define( 'FS_METHOD', 'direct' );\n\
+define('WP_REDIS_PORT', 6379);\n" /var/www/html/wp-config.php
+	fi
+	# Run redis
+	if nc -zv redis 6379; then
+		wp redis enable
+	else
+		echo "Redis is not running. Skipping Redis cache enablement."
+	fi
+
 	echo "WordPress installation complete!"
 else
 	echo "WordPress is already installed."
