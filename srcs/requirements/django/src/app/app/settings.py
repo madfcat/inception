@@ -133,10 +133,7 @@ STATIC_URL = "/static/"
 
 STATIC_ROOT =  BASE_DIR / 'staticfiles'
 
-# print("STATIC_ROOT ", STATIC_ROOT, flush=True)
-
 STATICFILES_DIRS = [
-    BASE_DIR / "app/static",
     BASE_DIR / "static",
 ]
 

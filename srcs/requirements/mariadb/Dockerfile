@@ -16,7 +16,6 @@ COPY entrypoint.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/entrypoint.sh
 
 # Copy custom config to expose port 3306
-# RUN rm -rf /etc/my.cnf.d/*
 COPY ./conf/mymariadb-server.cnf /etc/my.cnf.d/
 
 USER mysql

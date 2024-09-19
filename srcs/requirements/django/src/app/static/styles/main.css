@@ -78,9 +78,14 @@ a {
 	vertical-align: middle;
 }
 
-.navbar a {
+.navbar a,
+.navbar a:visited,
+.navbar a:focus,
+.navbar a:hover
+ {
 	background-color: chartreuse;
 	padding: 0 20px;
+	color: black;
 }
 
 .gallery {

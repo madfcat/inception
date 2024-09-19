@@ -70,8 +70,6 @@ services:
     build: ./srcs/requirements/redis
     image: redis
     container_name: redis
-    # depends_on:
-    #   - wordpress
     networks:
       - inception_network
     expose:
