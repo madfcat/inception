@@ -10,9 +10,6 @@
 #                                                                              #
 # **************************************************************************** #
 
-# Export env variables
-# export $(shell sed 's/=.*//' "./srcs/.env")
-
 LOGIN=vshchuki
 DOMAIN_NAME=$(LOGIN).hive.fi
 ADMINER_DOMAIN_NAME=adminer.$(DOMAIN_NAME)
@@ -65,8 +62,8 @@ all:
 		echo "Subomain already exists in $(FILE)."; \
 	fi
 
-	docker compose --env-file ./srcs/.env build --no-cache
-	docker compose --env-file ./srcs/.env up
+	docker compose -f ./srcs/docker-compose.yml build --no-cache
+	docker compose -f ./srcs/docker-compose.yml up
 
 stop:
 	docker compose down
