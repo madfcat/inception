@@ -7,7 +7,7 @@ echo "Starting Wordpress..."
 
 # Wait for MariaDB to become ready
 echo "Waiting for MariaDB to be available..."
-until mariadb-admin ping -h "${MYSQL_HOST}" --silent; do
+until mariadb-admin ping -h "${MYSQL_HOST}" -u root -p"${MYSQL_ROOT_PASSWORD}" --silent; do
     sleep 1
 done
 echo "MariaDB is available. Proceeding with database initialization..."
@@ -19,7 +19,7 @@ mysql -h "${MYSQL_HOST}" -P "${MYSQL_PORT}" -u root -p"${MYSQL_ROOT_PASSWORD}" <
 	GRANT ALL PRIVILEGES ON ${WP_DB_NAME}.* TO '${WP_DB_USER}'@'%';
 	FLUSH PRIVILEGES;
 EOSQL
-echo "Database for kuma created successfully."
+echo "Database for Wordpress created successfully."
 
 # If wp-config.php doesn't exist, create it
 if [ ! -f /var/www/html/wp-config.php ]; then
@@ -55,18 +55,12 @@ if ! wp core is-installed --path=/var/www/html --allow-root; then
 		--path=/var/www/html \
 		--allow-root
 
-	# Update site URL and home URL (if needed)
-	# echo "HOST is ${HTTP_HOST}"
-	# wp option update siteurl "https://${HTTP_HOST}" --path=/var/www/html --allow-root
-	# wp option update home "https://${HTTP_HOST}" --path=/var/www/html --allow-root
-
 	# Create a simple user
 	wp user create $WP_SIMPLE_USERNAME $WP_SIMPLE_EMAIL \
 		--role="${WP_SIMPLE_ROLE}" \
 		--user_pass="${WP_SIMPLE_PASSWORD}"
 
 	# Install and activate a theme (replace 'twentytwentyone' with your theme)
-	# wp theme install twentytwentyone --activate --path=/var/www/html --allow-root
 	wp theme install kadence --activate --path=/var/www/html --allow-root
 
 	# Import dummy content
@@ -84,9 +78,6 @@ if ! wp core is-installed --path=/var/www/html --allow-root; then
 	# Install redis plugin and add config
 	wp plugin install redis-cache --activate
 	if ! grep -q "WP_REDIS_HOST" /var/www/html/wp-config.php; then
-		# printf "\n// Redis configuration\n" >> /var/www/html/wp-config.php
-		# printf "define('WP_REDIS_HOST', 'redis');\n" >> /var/www/html/wp-config.php
-		# printf "define('WP_REDIS_PORT', 6379);\n" >> /var/www/html/wp-config.php
 		sed -i "/\/\* That's all, stop editing! Happy publishing. \*\//a \
 \
 /* Redis configuration */\n\

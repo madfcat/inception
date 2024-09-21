@@ -8,7 +8,7 @@ echo "Starting kuma..."
 # Function to wait for MariaDB to be ready
 wait_for_mariadb() {
 	echo "Waiting for MariaDB to be available at ${MYSQL_HOST}:${MYSQL_PORT}..."
-	until mariadb-admin ping -h "${MYSQL_HOST}" -P "${MYSQL_PORT}" --silent; do
+	until mariadb-admin ping -h "${MYSQL_HOST}" -P "${MYSQL_PORT}" -u root -p"${MYSQL_ROOT_PASSWORD}" --silent; do
 		echo "MariaDB is not available yet. Waiting..."
 		sleep 2
 	done

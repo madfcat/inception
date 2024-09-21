@@ -12,7 +12,6 @@ RUN mkdir -p /run/mysqld && chown -R mysql:mysql /run/mysqld
 # Initialize the MariaDB data directory
 RUN mysql_install_db --user=mysql --datadir=/var/lib/mysql
 
-
 # Copy custom config to expose port 3306
 COPY ./conf/mymariadb-server.cnf /etc/my.cnf.d/
 
@@ -21,8 +20,10 @@ WORKDIR /usr/local/bin/
 
 COPY script.sql /usr/local/bin/
 
-# RUN envsubst < /usr/local/bin/script.sql > /usr/local/bin/init_script.sql
+RUN mkdir -p /usr/local/bin
+COPY ./entrypoint.sh /usr/local/bin/entrypoint.sh
+RUN chmod +x /usr/local/bin/entrypoint.sh
 
 USER mysql
 
-CMD ["mariadbd",  "--init-file=/usr/local/bin/script.sql"]
+ENTRYPOINT [ "/usr/local/bin/entrypoint.sh" ]

@@ -27,9 +27,3 @@ RUN chmod +x /usr/local/bin/entrypoint.sh
 
 # Use the custom entrypoint script
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
-
-# # Use dumb-init to handle proper signal forwarding
-# ENTRYPOINT ["/usr/bin/dumb-init", "--"]
-
-# # Start the Uptime Kuma server
-# CMD ["npm", "run", "start-server"]
