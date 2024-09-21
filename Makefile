@@ -6,7 +6,7 @@
 #    By: vshchuki <vshchuki@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/04 16:27:29 by vshchuki          #+#    #+#              #
-#    Updated: 2024/09/21 20:16:09 by vshchuki         ###   ########.fr        #
+#    Updated: 2024/09/22 01:12:14 by vshchuki         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,14 +47,14 @@ all:
 	else \
 		echo "Domain already exists in $(FILE)."; \
 	fi
-	@if ! grep -q $(ADMINER_DOMAIN_NAME) $(FILE); then \
+	@if ! grep -q "^127\.0\.0\.1[[:space:]]\+$(ADMINER_DOMAIN_NAME)" $(FILE); then \
 		echo "Subdomain not found. Adding entry..."; \
 		echo "$(ADMINER_ENTRY)" | sudo tee -a $(FILE) > /dev/null; \
 		echo "Entry added: $(ADMINER_ENTRY)"; \
 	else \
 		echo "Subomain already exists in $(FILE)."; \
 	fi
-	@if ! grep -q $(DJANGO_DOMAIN_NAME) $(FILE); then \
+	@if ! grep -q "^127\.0\.0\.1[[:space:]]\+$(DJANGO_DOMAIN_NAME)" $(FILE); then \
 		echo "Subdomain not found. Adding entry..."; \
 		echo "$(DJANGO_ENTRY)" | sudo tee -a $(FILE) > /dev/null; \
 		echo "Entry added: $(DJANGO_ENTRY)"; \
@@ -62,7 +62,7 @@ all:
 		echo "Subomain already exists in $(FILE)."; \
 	fi
 
-	docker compose -f ./srcs/docker-compose.yml build --no-cache
+	docker compose -f ./srcs/docker-compose.yml build
 	docker compose -f ./srcs/docker-compose.yml up
 
 stop:
