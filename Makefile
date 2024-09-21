@@ -6,7 +6,7 @@
 #    By: vshchuki <vshchuki@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/04 16:27:29 by vshchuki          #+#    #+#              #
-#    Updated: 2024/09/19 01:13:03 by vshchuki         ###   ########.fr        #
+#    Updated: 2024/09/21 20:16:09 by vshchuki         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -66,10 +66,10 @@ all:
 	docker compose -f ./srcs/docker-compose.yml up
 
 stop:
-	docker compose down
+	docker compose -f ./srcs/docker-compose.yml down 
 
 fclean:
-	docker compose down --remove-orphans || true
+	docker compose -f ./srcs/docker-compose.yml down --remove-orphans || true
 	sudo rm -rf $(WP_VOLUME_PATH)
 	sudo rm -rf $(MYSQL_VOLUME_PATH)
 	docker image rm \

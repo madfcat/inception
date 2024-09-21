@@ -5,9 +5,9 @@ services:
     container_name: mariadb
     environment:
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
-      - MYSQL_DATABASE=${MYSQL_DATABASE}
-      - MYSQL_USER=${MYSQL_USER}
-      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+      # - MYSQL_DATABASE=${MYSQL_DATABASE}
+      # - MYSQL_USER=${MYSQL_USER}
+      # - MYSQL_PASSWORD=${MYSQL_PASSWORD}
     networks:
       - inception_network
     volumes:
@@ -22,7 +22,9 @@ services:
     container_name: wordpress
     environment:
       - HTTP_HOST=${DOMAIN_NAME}
-      - WP_DB_HOST=${WP_DB_HOST}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_HOST=${MYSQL_HOST}
+      - MYSQL_PORT=${MYSQL_PORT}
       - WP_DB_NAME=${MYSQL_DATABASE}
       - WP_DB_USER=${MYSQL_USER}
       - WP_DB_PASSWORD=${MYSQL_PASSWORD}
@@ -95,10 +97,6 @@ services:
     build: ./requirements/adminer
     image: adminer
     container_name: adminer
-    environment:
-      - MYSQL_DATABASE=${MYSQL_DATABASE}
-      - MYSQL_USER=${MYSQL_USER}
-      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
     expose:
       - 90001
     networks:
@@ -121,6 +119,13 @@ services:
     build: ./requirements/kuma
     image: kuma
     container_name: kuma
+    environment:
+      - MYSQL_HOST=${MYSQL_HOST}
+      - MYSQL_PORT=${MYSQL_PORT}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - KUMA_DB_NAME=${KUMA_DB_NAME}
+      - KUMA_DB_USER=${KUMA_DB_USER}
+      - KUMA_DB_PASSWORD=${KUMA_DB_PASSWORD}
     ports:
       - "3001:3001"
     networks:

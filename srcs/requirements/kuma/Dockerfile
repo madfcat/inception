@@ -3,7 +3,8 @@ FROM alpine:3.19
 RUN apk update && apk add --no-cache \
 	git \
 	npm \
-	dumb-init
+	dumb-init \
+	mariadb-client
 
 # Clone Uptime Kuma repository
 RUN git clone https://github.com/louislam/uptime-kuma.git /uptime-kuma
@@ -20,8 +21,15 @@ RUN npm run build
 # Expose port
 EXPOSE 3001
 
-# Use dumb-init to handle proper signal forwarding
-ENTRYPOINT ["/usr/bin/dumb-init", "--"]
+# Add the custom entrypoint script
+COPY entrypoint.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/entrypoint.sh
 
-# Start the Uptime Kuma server
-CMD ["npm", "run", "start-server"]
+# Use the custom entrypoint script
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
+
+# # Use dumb-init to handle proper signal forwarding
+# ENTRYPOINT ["/usr/bin/dumb-init", "--"]
+
+# # Start the Uptime Kuma server
+# CMD ["npm", "run", "start-server"]

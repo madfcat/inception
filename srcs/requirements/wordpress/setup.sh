@@ -5,6 +5,22 @@ set -e
 
 echo "Starting Wordpress..."
 
+# Wait for MariaDB to become ready
+echo "Waiting for MariaDB to be available..."
+until mariadb-admin ping -h "${MYSQL_HOST}" --silent; do
+    sleep 1
+done
+echo "MariaDB is available. Proceeding with database initialization..."
+
+# Initialize wordpress db
+mysql -h "${MYSQL_HOST}" -P "${MYSQL_PORT}" -u root -p"${MYSQL_ROOT_PASSWORD}" <<-EOSQL
+	CREATE DATABASE IF NOT EXISTS ${WP_DB_NAME};
+	CREATE USER IF NOT EXISTS '${WP_DB_USER}'@'%' IDENTIFIED BY '${WP_DB_PASSWORD}';
+	GRANT ALL PRIVILEGES ON ${WP_DB_NAME}.* TO '${WP_DB_USER}'@'%';
+	FLUSH PRIVILEGES;
+EOSQL
+echo "Database for kuma created successfully."
+
 # If wp-config.php doesn't exist, create it
 if [ ! -f /var/www/html/wp-config.php ]; then
 	# Download WordPress if not already present
@@ -15,7 +31,7 @@ if [ ! -f /var/www/html/wp-config.php ]; then
 	wp config create --dbname="${WP_DB_NAME}" \
 		--dbuser="${WP_DB_USER}" \
 		--dbpass="${WP_DB_PASSWORD}" \
-		--dbhost="${WP_DB_HOST}" \
+		--dbhost="${MYSQL_HOST}:${MYSQL_PORT}" \
 		--dbprefix="${WP_TABLE_PREFIX}" \
 		--path=/var/www/html \
 		--allow-root
