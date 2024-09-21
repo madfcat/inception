@@ -17,19 +17,17 @@ MYSQL_ROOT_PASSWORD=rootpassword
 MYSQL_DATABASE=wordpress
 MYSQL_USER=wpuser
 MYSQL_PASSWORD=wppassword
+MYSQL_HOST=mariadb
+MYSQL_PORT=3306
 
 # WordPress configuration
-WP_DB_HOST=mariadb:3306
 WP_TABLE_PREFIX=wp_
 
 WP_SITE_NAME=Inception @ Hive Helsinki
-
-# Admin user
 WP_ADMIN_USERNAME=cobb
 WP_ADMIN_EMAIL=admin@example.com
 WP_ADMIN_PASSWORD=adminpassword
 
-# Second user
 WP_SIMPLE_USERNAME=mal
 WP_SIMPLE_EMAIL=user@example.com
 WP_SIMPLE_ROLE=subscriber
@@ -39,6 +37,12 @@ WP_DUMMY_XML=https://raw.githubusercontent.com/WPTT/theme-test-data/master/theme
 
 # Django
 DJANGO_SECRET_KEY=django-insecure-v!be*lqx7+xpzrm+49wzb^urr!$$c^1vp74h))lci-riqvlzcw
+
+# Kuma
+KUMA_DB_NAME=kuma
+KUMA_DB_NAME=kuma
+KUMA_DB_USER=kumauser
+KUMA_DB_PASSWORD=kumapassword
 ```
 
 ## Copying vogsphere cloned files to a VM machine via SSH
@@ -47,16 +51,75 @@ DJANGO_SECRET_KEY=django-insecure-v!be*lqx7+xpzrm+49wzb^urr!$$c^1vp74h))lci-riqv
 scp -P 2222 -r ./inception vshchuki@127.0.0.1:/home/vshchuki/Documents/inception-vog
 ```
 
-## Setting up django development environment
+## Django
 
+Access the static website from: https://django.vshchuki.hive.fi/
+
+### Setting up django development environment
 
 - Use pyenv to get the correct version
 - Setup local environment with venv
 
+## Adminer
+
+Access adminer panel from: https://adminer.vshchuki.hive.fi/
+
+To access wordpress db:
+
+- Server: `mariadb`
+- Username: `wpuser`
+- Password: `wppassword`
+- Database: `wordpress`
+
+To access wordpress db:
+
+- Server: `mariadb`
+- Username: `kumauser`
+- Password: `kumapassword`
+- Database: `kuma`
+
 ## Kuma
 
-To monitor HTTPS of the server add https://nginx/
+Access kuma panel from: https://vshchuki.hive.fi:3001/
+
+To login:
+
+- Hostname: `mariadb`
+- Port: `3306`
+- Username: `kumauser`
+- Password: `kumapassword`
+- Database Name: `kuma`
+
+To start monitoring:
+
+- Creat a new monitor of a HTTPS server with URL: `https://nginx/`
+- Also tick: `Ignore TLS/SSL errors for HTTPS websites`
+- `docker stop wordpress` to see that service is not available
+- `docker start wordpress` to bring it back
+
+
+## Inception tests
+
+### Test if containers run main executable for PID 1
+
+The PID 1 executable should be a main process
 
 ```
+docker exec -it mariadb ps aux
+docker exec -it wordpress ps aux
+docker exec -it nginx ps aux
+docker exec -it redis ps aux
+docker exec -it adminer ps aux
+docker exec -it pure-ftpd ps aux
+docker exec -it django ps aux
+docker exec -it kuma ps aux
+```
+
+### Check root user password in mariadb
 
 ```
+docker exec -it mariadb /bin/sh
+mysql -u root -p
+```
+
+The root password should be: `rootpassword`
