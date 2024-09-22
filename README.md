@@ -1,4 +1,10 @@
-# inception
+# Inception
+
+## Desctiption
+
+> This project aims to broaden your knowledge of system administration by using Docker.
+You will virtualize several Docker images, creating them in your new personal virtual
+machine.
 
 ## Environment variables
 
@@ -147,4 +153,10 @@ For cache:
 
 ```
 docker builder prune
+```
+
+Check available docker networks, images, containers, volumes:
+
+```
+docker network ls; docker volume ls; docker images; docker ps -a
 ```
