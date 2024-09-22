@@ -2,9 +2,9 @@ FROM alpine:3.19
 
 # Install packages
 RUN apk update && apk add --no-cache \
-	mariadb \
-	mariadb-client \ 
-	envsubst
+mariadb \
+mariadb-client \ 
+envsubst
 
 # Create the required directory for MariaDB runtime files
 RUN mkdir -p /run/mysqld && chown -R mysql:mysql /run/mysqld
@@ -16,13 +16,17 @@ RUN mysql_install_db --user=mysql --datadir=/var/lib/mysql
 COPY ./conf/mymariadb-server.cnf /etc/my.cnf.d/
 
 # Use the custom entrypoint script
+
 WORKDIR /usr/local/bin/
 
 COPY ./tools/script.sql /usr/local/bin/
 
-RUN mkdir -p /usr/local/bin
+# RUN mkdir -p /usr/local/bin
 COPY ./tools/entrypoint.sh /usr/local/bin/entrypoint.sh
 RUN chmod +x /usr/local/bin/entrypoint.sh
+
+RUN chmod -R 775 /usr/local/bin/
+RUN chown -R mysql:mysql /usr/local/bin/
 
 USER mysql
 

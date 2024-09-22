@@ -3,3 +3,10 @@
 skip-networking=0
 bind-address=0.0.0.0
 port=3306
+innodb_buffer_pool_size=100M
+max_allowed_packet=1024M
+net_read_timeout=3600
+net_write_timeout=3600
+
+max_connections = 400
+interactive_timeout=6000

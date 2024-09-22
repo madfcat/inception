@@ -82,8 +82,9 @@ if ! wp core is-installed --path=/var/www/html --allow-root; then
 \
 /* Redis configuration */\n\
 define('WP_REDIS_HOST', 'redis');\n\
-define( 'FS_METHOD', 'direct' );\n\
-define('WP_REDIS_PORT', 6379);\n" /var/www/html/wp-config.php
+define('FS_METHOD', 'direct');\n\
+define('WP_REDIS_PORT', 6379);\n\
+define('WP_REDIS_DATABASE', 15);" /var/www/html/wp-config.php
 	fi
 	# Run redis
 	if nc -zv redis 6379; then
@@ -92,10 +93,12 @@ define('WP_REDIS_PORT', 6379);\n" /var/www/html/wp-config.php
 		echo "Redis is not running. Skipping Redis cache enablement."
 	fi
 
+	chmod -R 777 /var/www/html
 	echo "WordPress installation complete!"
 else
 	echo "WordPress is already installed."
 fi
+
 
 # Start PHP-FPM in the foreground to keep the container running
 exec php-fpm81 -F -R

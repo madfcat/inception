@@ -21,6 +21,9 @@ RUN apk update && apk add --no-cache \
 	php81-dom \
 	mariadb-client
 
+# Create a custom PHP configuration file to set max_execution_time
+RUN echo "max_execution_time = 300" > /etc/php81/conf.d/custom.ini
+
 # Create a symlink for `php`
 RUN ln -s /usr/bin/php81 /usr/bin/php
 
