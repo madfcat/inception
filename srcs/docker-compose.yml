@@ -66,7 +66,7 @@ services:
     restart: always
 
   redis:
-    build: ./requirements/redis
+    build: ./requirements/bonus/redis
     image: redis
     container_name: redis
     networks:
@@ -76,7 +76,7 @@ services:
     restart: always
   
   pure-ftpd:
-    build: ./requirements/pure-ftpd
+    build: ./requirements/bonus/pure-ftpd
     image: pure-ftpd
     container_name: pure-ftpd
     ports:
@@ -91,7 +91,7 @@ services:
     restart: always
 
   adminer:
-    build: ./requirements/adminer
+    build: ./requirements/bonus/adminer
     image: adminer
     container_name: adminer
     expose:
@@ -101,7 +101,7 @@ services:
     restart: always
 
   django:
-    build: ./requirements/django
+    build: ./requirements/bonus/django
     image: django
     container_name: django
     environment:
@@ -113,7 +113,7 @@ services:
     restart: always
 
   kuma:
-    build: ./requirements/kuma
+    build: ./requirements/bonus/kuma
     image: kuma
     container_name: kuma
     environment:

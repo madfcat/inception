@@ -131,6 +131,24 @@ docker exec -it mariadb /bin/sh
 mysql -u root -p
 ```
 
+Check databases:
+
+```
+SHOW DATABASES;
+```
+
+Show tables from a db:
+
+```
+SHOW TABLES FROM wordpress
+```
+
+Show all users from Wordpress db:
+
+```
+SELECT * FROM wordpress.wp_users
+```
+
 The root password should be: `rootpassword`
 
 ### Useful docker commands
