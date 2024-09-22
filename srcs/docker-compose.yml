@@ -141,8 +141,8 @@ volumes:
     driver_opts:
       type: none
       o: bind
-      device: /home/vshchuki/data/wp_data
-      # device: /Users/vshchuki/data/wp_data
+      # device: /home/vshchuki/data/wp_data
+      device: /Users/vshchuki/data/wp_data
 
   db_data:
     name: db_data
@@ -150,5 +150,5 @@ volumes:
     driver_opts:
       type: none
       o: bind
-      device:  /home/vshchuki/data/db_data
-      # device:  /Users/vshchuki/data/db_data
+      # device:  /home/vshchuki/data/db_data
+      device:  /Users/vshchuki/data/db_data

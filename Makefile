@@ -6,7 +6,7 @@
 #    By: vshchuki <vshchuki@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/04 16:27:29 by vshchuki          #+#    #+#              #
-#    Updated: 2024/09/22 21:28:44 by vshchuki         ###   ########.fr        #
+#    Updated: 2024/09/22 21:38:07 by vshchuki         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,9 +22,9 @@ ADMINER_ENTRY=127.0.0.1   $(ADMINER_DOMAIN_NAME)
 DJANGO_ENTRY=127.0.0.1   $(DJANGO_DOMAIN_NAME)
 
 # For Linux:
-HOME_DIR=/home
+# HOME_DIR=/home
 # For MacOS:
-# HOME_DIR=/Users
+HOME_DIR=/Users
 
 USER_DIR=$(HOME_DIR)/$(LOGIN)
 
@@ -91,29 +91,22 @@ fclean:
 		2>/dev/null || true
 	docker volume rm wp_data db_data 2>/dev/null || true
 	docker network rm inception_network 2>/dev/null || true
-
 	@if grep -q "^127\.0\.0\.1[[:space:]]\+$(DOMAIN_NAME)" $(HOSTS_FILE); then \
 		echo "Removing entry for $(DOMAIN_NAME) from $(HOSTS_FILE)..."; \
-		if [[ "$OSTYPE" == "darwin"* ]]; then \
+		if [[ "$$OSTYPE" == "darwin"* ]]; then \
 			sudo sed -i '' "/^127\.0\.0\.1[[:space:]]\{1,\}$(DOMAIN_NAME)/d" $(HOSTS_FILE); \
-		else \
-			sudo sed -i "/^127\.0\.0\.1[[:space:]]\+$(DOMAIN_NAME)/d" $(HOSTS_FILE); \
 		fi; \
 	fi
 	@if grep -q "^127\.0\.0\.1[[:space:]]\+$(ADMINER_DOMAIN_NAME)" $(HOSTS_FILE); then \
 		echo "Removing entry for $(ADMINER_DOMAIN_NAME) from $(HOSTS_FILE)..."; \
-		if [[ "$OSTYPE" == "darwin"* ]]; then \
+		if [[ "$$OSTYPE" == "darwin"* ]]; then \
 			sudo sed -i '' "/^127\.0\.0\.1[[:space:]]\{1,\}$(ADMINER_DOMAIN_NAME)/d" $(HOSTS_FILE); \
-		else \
-			sudo sed -i "/^127\.0\.0\.1[[:space:]]\+$(ADMINER_DOMAIN_NAME)/d" $(HOSTS_FILE); \
 		fi; \
 	fi
 	@if grep -q "^127\.0\.0\.1[[:space:]]\+$(DJANGO_DOMAIN_NAME)" $(HOSTS_FILE); then \
 		echo "Removing entry for $(DJANGO_DOMAIN_NAME) from $(HOSTS_FILE)..."; \
-		if [[ "$OSTYPE" == "darwin"* ]]; then \
+		if [[ "$$OSTYPE" == "darwin"* ]]; then \
 			sudo sed -i '' "/^127\.0\.0\.1[[:space:]]\{1,\}(DJANGO_DOMAIN_NAME)/d" $(HOSTS_FILE); \
-		else \
-			sudo sed -i "/^127\.0\.0\.1[[:space:]]\+$(DJANGO_DOMAIN_NAME)/d" $(HOSTS_FILE); \
 		fi; \
 	fi
 
