@@ -45,12 +45,6 @@ KUMA_DB_USER=kumauser
 KUMA_DB_PASSWORD=kumapassword
 ```
 
-## Copying vogsphere cloned files to a VM machine via SSH
-
-```
-scp -P 2222 -r ./inception vshchuki@127.0.0.1:/home/vshchuki/Documents/inception-vog
-```
-
 ## Django
 
 Access the static website from: https://django.vshchuki.hive.fi/
@@ -98,7 +92,16 @@ To start monitoring:
 - `docker start wordpress` to bring it back
 
 
-## Inception tests
+
+
+## Inception tests @ Hive
+
+
+### Copying vogsphere cloned files to a VM machine via SSH
+
+```
+scp -P 2222 -r ./inception vshchuki@127.0.0.1:/home/vshchuki/Documents/inception-vog
+```
 
 ### Test if containers run main executable for PID 1
 
@@ -123,3 +126,25 @@ mysql -u root -p
 ```
 
 The root password should be: `rootpassword`
+
+### Useful docker commands
+
+You can prune the dangling docker data with.
+
+Remove all unused containers, networks, images (both dangling and unused), and optionally, volumes.
+
+```
+docker image prune
+```
+
+For images:
+
+```
+docker image prune
+```
+
+For cache:
+
+```
+docker builder prune
+```
