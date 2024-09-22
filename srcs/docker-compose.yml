@@ -123,8 +123,8 @@ services:
       - KUMA_DB_NAME=${KUMA_DB_NAME}
       - KUMA_DB_USER=${KUMA_DB_USER}
       - KUMA_DB_PASSWORD=${KUMA_DB_PASSWORD}
-    ports:
-      - "3001:3001"
+    expose:
+      - 3001
     networks:
       - inception_network
     restart: always
