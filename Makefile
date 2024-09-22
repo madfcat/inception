@@ -6,7 +6,7 @@
 #    By: vshchuki <vshchuki@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/04 16:27:29 by vshchuki          #+#    #+#              #
-#    Updated: 2024/09/22 22:04:22 by vshchuki         ###   ########.fr        #
+#    Updated: 2024/09/22 22:07:28 by vshchuki         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -120,7 +120,7 @@ fclean:
 	@if grep -q "^127\.0\.0\.1[[:space:]]\+$(DJANGO_DOMAIN_NAME)" $(HOSTS_FILE); then \
 		echo "Removing entry for $(DJANGO_DOMAIN_NAME) from $(HOSTS_FILE)..."; \
 		if [[ "$$OSTYPE" == "darwin"* ]]; then \
-			sudo sed -i '' "/^127\.0\.0\.1[[:space:]]\{1,\}(DJANGO_DOMAIN_NAME)/d" $(HOSTS_FILE); \
+			sudo sed -i '' "/^127\.0\.0\.1[[:space:]]\{1,\}$(DJANGO_DOMAIN_NAME)/d" $(HOSTS_FILE); \
 		else \
 			sudo sed -i "/^127\.0\.0\.1[[:space:]]\+$(DJANGO_DOMAIN_NAME)/d" $(HOSTS_FILE); \
 		fi; \
@@ -128,7 +128,7 @@ fclean:
 	@if grep -q "^127\.0\.0\.1[[:space:]]\+$(KUMA_DOMAIN_NAME)" $(HOSTS_FILE); then \
 		echo "Removing entry for $(KUMA_DOMAIN_NAME) from $(HOSTS_FILE)..."; \
 		if [[ "$$OSTYPE" == "darwin"* ]]; then \
-			sudo sed -i '' "/^127\.0\.0\.1[[:space:]]\{1,\}(KUMA_DOMAIN_NAME)/d" $(HOSTS_FILE); \
+			sudo sed -i '' "/^127\.0\.0\.1[[:space:]]\{1,\}$(KUMA_DOMAIN_NAME)/d" $(HOSTS_FILE); \
 		else \
 			sudo sed -i "/^127\.0\.0\.1[[:space:]]\+$(KUMA_DOMAIN_NAME)/d" $(HOSTS_FILE); \
 		fi; \
