@@ -13,7 +13,7 @@ COPY ../../${CERTS_}/private.key* /etc/ssl/private/private.key;
 COPY ../../${CERTS_}/certificate.crt* /etc/ssl/certs/certificate.crt;
 
 RUN mkdir -p /usr/local/bin
-COPY ./entrypoint.sh /usr/local/bin/entrypoint.sh
+COPY ./tools/entrypoint.sh /usr/local/bin/entrypoint.sh
 RUN chmod +x /usr/local/bin/entrypoint.sh
 
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]

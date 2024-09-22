@@ -18,10 +18,10 @@ COPY ./conf/mymariadb-server.cnf /etc/my.cnf.d/
 # Use the custom entrypoint script
 WORKDIR /usr/local/bin/
 
-COPY script.sql /usr/local/bin/
+COPY ./tools/script.sql /usr/local/bin/
 
 RUN mkdir -p /usr/local/bin
-COPY ./entrypoint.sh /usr/local/bin/entrypoint.sh
+COPY ./tools/entrypoint.sh /usr/local/bin/entrypoint.sh
 RUN chmod +x /usr/local/bin/entrypoint.sh
 
 USER mysql

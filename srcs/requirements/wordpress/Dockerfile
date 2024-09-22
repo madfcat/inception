@@ -31,7 +31,7 @@ RUN wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.ph
 
 # Entry point script to automate WordPress setup
 RUN mkdir -p /usr/local/bin
-COPY ./setup.sh /usr/local/bin/setup.sh
+COPY ./tools/setup.sh /usr/local/bin/setup.sh
 RUN chmod +x /usr/local/bin/setup.sh
 
 # Copy override config for PHP-FPM

@@ -6,7 +6,7 @@
 #    By: vshchuki <vshchuki@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/04 16:27:29 by vshchuki          #+#    #+#              #
-#    Updated: 2024/09/22 15:36:58 by vshchuki         ###   ########.fr        #
+#    Updated: 2024/09/22 16:24:48 by vshchuki         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -87,15 +87,15 @@ fclean:
 
 	@if grep -q "^127\.0\.0\.1[[:space:]]\+$(DOMAIN_NAME)" $(HOSTS_FILE); then \
 		echo "Removing entry for $(DOMAIN_NAME) from $(HOSTS_FILE)..."; \
-		sudo sed -i "/^127\.0\.0\.1[[:space:]]\+$(DOMAIN_NAME)/d" $(HOSTS_FILE); \
+		sudo sed -i '' "/^127\.0\.0\.1[[:space:]]\{1,\}$(DOMAIN_NAME)/d" $(HOSTS_FILE); \
 	fi
 	@if grep -q "^127\.0\.0\.1[[:space:]]\+$(ADMINER_DOMAIN_NAME)" $(HOSTS_FILE); then \
 		echo "Removing entry for $(ADMINER_DOMAIN_NAME) from $(HOSTS_FILE)..."; \
-		sudo sed -i "/^127\.0\.0\.1[[:space:]]\+$(ADMINER_DOMAIN_NAME)/d" $(HOSTS_FILE); \
+		sudo sed -i '' "/^127\.0\.0\.1[[:space:]]\{1,\}$(ADMINER_DOMAIN_NAME)/d" $(HOSTS_FILE); \
 	fi
 	@if grep -q "^127\.0\.0\.1[[:space:]]\+$(DJANGO_DOMAIN_NAME)" $(HOSTS_FILE); then \
 		echo "Removing entry for $(DJANGO_DOMAIN_NAME) from $(HOSTS_FILE)..."; \
-		sudo sed -i "/^127\.0\.0\.1[[:space:]]\+$(DJANGO_DOMAIN_NAME)/d" $(HOSTS_FILE); \
+		sudo sed -i '' "/^127\.0\.0\.1[[:space:]]\{1,\}$(DJANGO_DOMAIN_NAME)/d" $(HOSTS_FILE); \
 	fi
 
 re: fclean all

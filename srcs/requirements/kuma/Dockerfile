@@ -22,7 +22,7 @@ RUN npm run build
 EXPOSE 3001
 
 # Add the custom entrypoint script
-COPY entrypoint.sh /usr/local/bin/
+COPY ./tools/entrypoint.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/entrypoint.sh
 
 # Use the custom entrypoint script
