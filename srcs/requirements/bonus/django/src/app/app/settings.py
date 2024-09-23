@@ -38,8 +38,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     "localhost",
-    "vshchuki.hive.fi",
-    "django.vshchuki.hive.fi",
+    "vshchuki.42.fr",
+    "django.vshchuki.42.fr",
     "127.0.0.1",
     "nginx",
     "*",

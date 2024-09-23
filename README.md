@@ -13,7 +13,7 @@ Here is an example of environment variables needed for this project. Place `.env
 WP_DUMMY_XML is optional and used to seed some dummy posts.
 
 ```
-DOMAIN_NAME=vshchuki.hive.fi
+DOMAIN_NAME=vshchuki.42.fr
 
 # Certificates (Directory for private.key, certificate.crt)
 CERTS_=./srcs/certificates
@@ -53,7 +53,7 @@ KUMA_DB_PASSWORD=kumapassword
 
 ## Django
 
-Access the static website from: https://django.vshchuki.hive.fi/
+Access the static website from: https://django.vshchuki.42.fr/
 
 ### Setting up django development environment
 
@@ -62,7 +62,7 @@ Access the static website from: https://django.vshchuki.hive.fi/
 
 ## Adminer
 
-Access adminer panel from: https://adminer.vshchuki.hive.fi/
+Access adminer panel from: https://adminer.vshchuki.42.fr/
 
 To access wordpress db:
 
@@ -80,7 +80,7 @@ To access wordpress db:
 
 ## Kuma
 
-Access kuma panel from: https://vshchuki.hive.fi:3001/
+Access kuma panel from: https://vshchuki.42.fr:3001/
 
 To login:
 

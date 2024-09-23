@@ -3,17 +3,17 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: vshchuki <vshchuki@student.hive.fi>        +#+  +:+       +#+         #
+#    By: vshchuki <vshchuki@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/04 16:27:29 by vshchuki          #+#    #+#              #
-#    Updated: 2024/09/22 22:07:28 by vshchuki         ###   ########.fr        #
+#    Updated: 2024/09/23 12:00:54 by vshchuki         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 SHELL := /bin/bash
 
 LOGIN=vshchuki
-DOMAIN_NAME=$(LOGIN).hive.fi
+DOMAIN_NAME=$(LOGIN).42.fr
 ADMINER_DOMAIN_NAME=adminer.$(DOMAIN_NAME)
 DJANGO_DOMAIN_NAME=django.$(DOMAIN_NAME)
 KUMA_DOMAIN_NAME=kuma.$(DOMAIN_NAME)
@@ -79,6 +79,9 @@ all:
 	fi
 
 	docker compose -f ./srcs/docker-compose.yml build
+	docker compose -f ./srcs/docker-compose.yml up
+
+start:
 	docker compose -f ./srcs/docker-compose.yml up
 
 stop:
